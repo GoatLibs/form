@@ -1,0 +1,67 @@
+import type { AnyFieldApi, AnyFieldMeta, VueFormApi } from "@tanstack/vue-form";
+import GoatForm from "./GoatForm.vue";
+import type { App, Component, Plugin } from 'vue'
+import { z } from 'zod'
+
+export const plugin = {
+    install: (app: App) => {
+        app.component("GoatForm", GoatForm)
+    }
+} satisfies Plugin
+
+export type AnyVueFormApi = VueFormApi<any, any, any, any, any, any, any, any, any, any>
+
+
+export interface CommonSchemaItem {
+    name: string,
+    //type: string | boolean
+    fieldComponent?: Component
+    errorComponent?: Component<{
+        meta: AnyFieldMeta
+    }>,
+    inputComponent: Component<{
+        field: AnyFieldApi
+    }>,
+    labelComponent?: Component,
+    validator: z.ZodDefault<z.ZodTypeAny>,
+}
+
+export interface SingleInputSchemaItem extends CommonSchemaItem {
+    multi?: false | undefined,
+    field: {
+        label: string,
+        meta?: {
+            [k: string]: string
+        }
+    }
+}
+
+export interface MultiInputSchemaItem extends CommonSchemaItem {
+    multi: true
+    fields: Array<{
+        label: string,
+        meta?: {
+            [k: string]: string
+        }
+    }>
+}
+
+
+export type FormSchemaItem = MultiInputSchemaItem | SingleInputSchemaItem
+
+
+export interface FormSchema {
+    defaults: {
+        errorComponent?: Component,
+        labelComponent?: Component,
+    },
+    schema: FormSchemaItem[]
+}
+
+export function getFormDefaults(schema: FormSchema): { [k: string]: any } {
+    const result: { [k: string]: any } = {}
+    schema.schema.forEach((item) => {
+        result[item.name] = item.validator._def.defaultValue();
+    });
+    return result;
+}
