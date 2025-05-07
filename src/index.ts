@@ -8,7 +8,6 @@ export type AnyVueFormApi = VueFormApi<any, any, any, any, any, any, any, any, a
 
 export interface CommonSchemaItem {
     name: string,
-    //type: string | boolean
     fieldComponent?: Component
     errorComponent?: Component<{
         meta: AnyFieldMeta
@@ -46,7 +45,9 @@ export type FormSchemaItem = MultiInputSchemaItem | SingleInputSchemaItem
 
 export interface FormSchema {
     defaults: {
-        errorComponent?: Component,
+        errorComponent?: Component<{
+            meta: AnyFieldMeta
+        }>,
         labelComponent?: Component,
     },
     schema: FormSchemaItem[]
