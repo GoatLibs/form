@@ -22,8 +22,8 @@
   },
   "scripts": {
     "dev": "tsdown --watch",
-    "build:files": "tsdown",
-    "build:types": "vue-tsc --declaration --emitDeclarationOnly --outDir dist/",
+    "build:files": "tsdown --no-clean",
+    "build:types": "vue-tsc --outDir dist/types",
     "build": "run-s build:*"
   },
   "peerDependencies": {

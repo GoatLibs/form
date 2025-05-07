@@ -1,13 +1,7 @@
 import type { AnyFieldApi, AnyFieldMeta, VueFormApi } from "@tanstack/vue-form";
 import GoatForm from "./GoatForm.vue";
-import type { App, Component, Plugin } from 'vue'
+import type { Component } from 'vue'
 import { z } from 'zod'
-
-export const plugin = {
-    install: (app: App) => {
-        app.component("GoatForm", GoatForm)
-    }
-} satisfies Plugin
 
 export type AnyVueFormApi = VueFormApi<any, any, any, any, any, any, any, any, any, any>
 
@@ -64,4 +58,7 @@ export function getFormDefaults(schema: FormSchema): { [k: string]: any } {
         result[item.name] = item.validator._def.defaultValue();
     });
     return result;
-}
+} 
+
+
+export { GoatForm }
