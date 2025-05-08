@@ -13,7 +13,7 @@ defineProps<{
         }">
             <template v-slot="{ field }">
                 <template v-if="!sf.multi">
-                    <component :is="sf.labelComponent ?? schema.defaults.labelComponent">
+                    <component :is="sf.labelComponent ?? schema.defaults.labelComponent" :field="field">
                         {{ sf.field.label }}
                     </component>
                     <component :is="sf.inputComponent" :field="field" v-bind="sf.field"></component>
