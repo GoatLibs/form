@@ -24,7 +24,7 @@ export interface SingleInputSchemaItem extends CommonSchemaItem {
     field: {
         label: string,
         meta?: {
-            [k: string]: string
+            [k: string]: any
         }
     }
 }
@@ -34,7 +34,7 @@ export interface MultiInputSchemaItem extends CommonSchemaItem {
     fields: Array<{
         label: string,
         meta?: {
-            [k: string]: string
+            [k: string]: any
         }
     }>
 }
