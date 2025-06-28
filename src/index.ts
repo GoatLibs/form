@@ -8,6 +8,7 @@ export type AnyVueFormApi = VueFormApi<any, any, any, any, any, any, any, any, a
 
 export interface CommonSchemaItem {
     name: string,
+    any: false | undefined
     fieldComponent?: Component
     errorComponent?: Component<{
         meta: AnyFieldMeta
@@ -39,8 +40,12 @@ export interface MultiInputSchemaItem extends CommonSchemaItem {
     }>
 }
 
-
-export type FormSchemaItem = MultiInputSchemaItem | SingleInputSchemaItem
+export interface AnyComponentItem {
+    any: true,
+    component: Component,
+    props?: { [k: string]: any }
+}
+export type FormSchemaItem = MultiInputSchemaItem | SingleInputSchemaItem | AnyComponentItem;
 
 
 export interface FormSchema {
@@ -55,7 +60,9 @@ export interface FormSchema {
 
 export function getFormDefaults(schema: FormSchema): { [k: string]: any } {
     const result: { [k: string]: any } = {}
-    schema.schema.forEach((item) => {
+    schema.schema.filter((i) => {
+        return !i.any
+    }).forEach((item) => {
         result[item.name] = item.validator._def.defaultValue();
     });
     return result;
