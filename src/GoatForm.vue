@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
     <template v-for="sf in schema.schema">
-        <component :is="sf.fieldComponent ?? 'div'" class="goat_field" v-if="!sf.any">
+        <component :is="sf.fieldComponent ?? 'div'" class="goat_field" v-if="!sf.any" v-bind="sf.fieldComponentProps ?? {}">
             <form.Field :name="sf.name" :validators="{
                 onChange: sf.validator,
             }">
@@ -17,7 +17,7 @@ defineProps<{
                         <component :is="sf.labelComponent ?? schema.defaults.labelComponent" :field="field">
                             {{ sf.field.label }}
                         </component>
-                        <component :is="sf.inputComponent" :field="field" v-bind="sf.field"></component>
+                        <component :is="sf.inputComponent" :field="field" v-bind="sf.field.meta"></component>
                     </template>
                     <template v-else>
                         <div class="goat_subfield" v-for="{ label, ...args } in sf.fields">

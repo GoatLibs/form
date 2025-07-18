@@ -10,6 +10,9 @@ export interface CommonSchemaItem {
     name: string,
     any: false | undefined
     fieldComponent?: Component
+    fieldComponentProps?: {
+        [k: string]: any
+    }
     errorComponent?: Component<{
         meta: AnyFieldMeta
     }>,
